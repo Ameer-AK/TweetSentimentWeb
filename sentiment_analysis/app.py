@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify, make_response
 from sentiment_analysis import *
 app = Flask(__name__)
 
@@ -8,4 +8,6 @@ l = LexiconAnalyzer()
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    return str(ml.predict([request.get_json()['text']])[0])
+    inp = request.get_json()['text']
+    result = str(ml.predict([inp])[0])
+    return {"result": result}

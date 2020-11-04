@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-const { response } = require('express');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -22,6 +21,8 @@ app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -43,10 +44,13 @@ app.get('/analyze', (req, res) => {
 })
 
 app.post('/analyze', async (req, res) => {
-    console.log(`ANALYZING: ${req.body.analyze}`);
-    const result = await axios.post('http://localhost:5000/analyze', { text: req.body.analyze })
-    console.log(`Analysis result from Python: ${result.data}`);
-    res.redirect('/analyze');
+    const { text } = req.body;
+    console.log(req.body);
+    console.log(`ANALYZING: ${text}`);
+    const response = await axios.post('http://localhost:5000/analyze', { text })
+    const { data } = response;
+    console.log(`Result from Python: ${data.result}`);
+    res.send({ result: data.result })
 })
 
 app.listen(8080, () => {

@@ -1,6 +1,8 @@
 <% layout('layouts/boilerplate') %>
 
-<form action="/analyze" method="POST">
-    <textarea name="analyze" id="analyze" cols="30" rows="5"></textarea>
+<form action="/analyze" method="POST" id="analyze-form">
+    <textarea name="analyze" id="analyze-input" cols="30" rows="5"></textarea>
     <button>Analyze</button>
 </form>
+
+<script src="/analyze.js"></script>
