@@ -33,11 +33,12 @@ app.get('/search', (req, res) => {
 })
 
 app.post('/search', async (req, res) => {
-    const result = await client.get('search/tweets', { q: 'hello -filter:retweets', tweet_mode: 'extended', count: 100 }, (err, tweets, response) => {
-        for (let tweet of tweets.statuses) console.log(`User: ${tweet.user.screen_name}\n text: ${tweet.full_text}\n created on: ${tweet.created_at}`);
-    })
-    res.redirect('/search');
+    const result = await client.get('search/tweets', { q: 'hello -filter:retweets', tweet_mode: 'extended', count: 5, lang: 'en' })
+    console.log(result);
+    const tweets = result.statuses.map(status => status.full_text)
+    res.send(tweets)
 })
+
 
 app.get('/analyze', (req, res) => {
     res.render('analyze');
@@ -45,7 +46,6 @@ app.get('/analyze', (req, res) => {
 
 app.post('/analyze', async (req, res) => {
     const { text } = req.body;
-    console.log(req.body);
     console.log(`ANALYZING: ${text}`);
     const response = await axios.post('http://localhost:5000/analyze', { text })
     const { data } = response;
