@@ -34,9 +34,15 @@ app.get('/search', (req, res) => {
 
 app.post('/search', async (req, res) => {
     const result = await client.get('search/tweets', { q: 'hello -filter:retweets', tweet_mode: 'extended', count: 5, lang: 'en' })
-    console.log(result);
-    const tweets = result.statuses.map(status => status.full_text)
-    res.send(tweets)
+    result.statuses.forEach(s => console.log(s.full_text));
+    const texts = result.statuses.map(status => status.full_text)
+    const { data } = await axios.post('http://localhost:5000/analyze', { texts, model: 'ml' })
+    console.log(data);
+    const out = result.statuses.map((s, i) => {
+        return { username: s.user.screen_name, text: s.full_text, time: s.created_at, prediction: data[i] }
+    })
+    console.log(out);
+    res.send(out)
 })
 
 
@@ -47,10 +53,10 @@ app.get('/analyze', (req, res) => {
 app.post('/analyze', async (req, res) => {
     const { text } = req.body;
     console.log(`ANALYZING: ${text}`);
-    const response = await axios.post('http://localhost:5000/analyze', { text })
+    const response = await axios.post('http://localhost:5000/analyze', { texts: [text], model: 'ml' })
     const { data } = response;
-    console.log(`Result from Python: ${data.result}`);
-    res.send({ result: data.result })
+    console.log(`Result from Python: ${data}`);
+    res.send({ result: data })
 })
 
 app.listen(8080, () => {

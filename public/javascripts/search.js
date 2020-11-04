@@ -7,7 +7,8 @@ searchForm.addEventListener('submit', async (e) => {
     const body = document.querySelector('main');
     for (let tweet of data) {
         const p = document.createElement('p');
-        p.innerText = tweet;
+        p.innerText = `User: ${tweet.username}\nText:\n${tweet.text}\nCreated on: ${tweet.time}`;
+        p.style.color = tweet.prediction == 1 ? 'green' : 'red';
         body.append(p);
         body.append(document.createElement('br'));
     }

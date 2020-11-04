@@ -8,6 +8,9 @@ l = LexiconAnalyzer()
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    inp = request.get_json()['text']
-    result = str(ml.predict([inp])[0])
-    return {"result": result}
+    inp = request.get_json()
+    texts = inp['texts']
+    model = inp['model']
+    result = ml.predict(texts) if model == 'ml' else l.predict(
+        texts) if model == 'l' else ['XXXX']
+    return jsonify(result.tolist())
