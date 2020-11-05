@@ -3,8 +3,9 @@ import os
 import sys
 import pickle
 from normalizer import Normalizer
-from nltk import word_tokenize, pos_tag
+from nltk import word_tokenize, pos_tag, data
 from nltk.stem import WordNetLemmatizer
+data.path.append(os.path.join(os.path.dirname(__file__), 'nltk_data'))
 
 
 def resource_path(relative_path):
@@ -43,32 +44,34 @@ class LexiconAnalyzer:
         with open(resource_path("models/lexiconmodel.pkl"), "rb") as f:
             self.__dic = pickle.load(f)
 
-    def predict(self, text: str) -> int:
+    def predict(self, texts: [str]) -> [int]:
         """Method that predicts the sentiment of a given text.
 
         Parameters
         ----------
-            text: str
-                The text to be analyzed for sentiment
+            text: [str]
+                The texts to be analyzed for sentiment
 
         Returns
         -------
-            sent: int
-                 Sentiment of the given text.
+            sent: [int]
+                 Sentiment of the given texts.
                  1 is positive and 0 is negative.
         """
-
-        negate = 1
-        sum = 0
-        for t in self.getTaggedLemmas(text):
-            score = self.getScore(t[0], t[1])
-            # If the word is a negation the score of the next word with sentiment will be negated.
-            if t[0] in self.__negations:
-                negate = -1
-            if score != 0:
-                sum += score * negate
-                negate = 1
-        return 1 if sum >= 0 else 0
+        result = []
+        for text in texts:
+            negate = 1
+            sum = 0
+            for t in self.getTaggedLemmas(text):
+                score = self.getScore(t[0], t[1])
+                # If the word is a negation the score of the next word with sentiment will be negated.
+                if t[0] in self.__negations:
+                    negate = -1
+                if score != 0:
+                    sum += score * negate
+                    negate = 1
+            result.append(1 if sum >= 0 else 0)
+        return result
 
     def getScore(self, word: str, tag: str) -> float:
         """Private method that gets the sentiment score of a word from the SWN dict using the word and its POS tag.
