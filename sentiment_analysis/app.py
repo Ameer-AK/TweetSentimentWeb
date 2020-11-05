@@ -1,7 +1,7 @@
+from sentiment_analysis import *
+from flask import Flask, request, jsonify, make_response
 from dotenv import load_dotenv
 load_dotenv()
-from flask import Flask, request, jsonify, make_response
-from sentiment_analysis import *
 app = Flask(__name__)
 
 ml = MLAnalyzer()
@@ -13,6 +13,6 @@ def analyze():
     inp = request.get_json()
     texts = inp['texts']
     model = inp['model']
-    result = ml.predict(texts) if model == 'ml' else l.predict(
+    result = ml.predict(texts).tolist() if model == 'ml' else l.predict(
         texts) if model == 'l' else ['XXXX']
-    return jsonify(result.tolist())
+    return jsonify(result)

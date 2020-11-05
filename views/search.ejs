@@ -1,6 +1,12 @@
 <% layout('layouts/boilerplate') %>
 <form action="/search" method="POST" id="search-form">
-    <textarea name="search" id="search" cols="30" rows="5"></textarea>
+    <textarea name="search_text" id="search" cols="30" rows="5"></textarea>
+    <div>
+        <label for="ml-radio">Machine Learning (recommended)</label>
+        <input type="radio" name="model" id="ml-radio" value="ml" checked>
+        <label for="l-radio">Lexicon</label>
+        <input type="radio" name="model" id="l-radio" value="l">
+    </div>
     <button>search</button>
 </form>
 

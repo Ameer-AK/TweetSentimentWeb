@@ -1,7 +1,13 @@
 <% layout('layouts/boilerplate') %>
 
 <form action="/analyze" method="POST" id="analyze-form">
-    <textarea name="analyze" id="analyze-input" cols="30" rows="5"></textarea>
+    <textarea name="analyze_text" id="analyze-input" cols="30" rows="5"></textarea>
+    <div>
+        <label for="ml-radio">Machine Learning (recommended)</label>
+        <input type="radio" name="model" id="ml-radio" value="ml" checked>
+        <label for="l-radio">Lexicon</label>
+        <input type="radio" name="model" id="l-radio" value="l">
+    </div>
     <button>Analyze</button>
 </form>
 
