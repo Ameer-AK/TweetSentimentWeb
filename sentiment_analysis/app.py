@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask, request, jsonify, make_response
 from sentiment_analysis import *
 app = Flask(__name__)
