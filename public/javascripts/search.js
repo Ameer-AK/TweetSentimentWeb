@@ -2,9 +2,14 @@ const searchForm = document.querySelector('#search-form');
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const searchInput = searchForm.elements.search_text;
-    const modelInput = searchForm.elements.model;
-    const { data } = await axios.post('/search', { q: searchInput.value, model: modelInput.value });
+    const { q: { value: q }, model: { value: model }, retweets: { checked: retweets }, replies: { checked: replies }, type: { value: type } } = searchForm.elements;
+    searchForm.elements.q.value = '';
+    // console.log(q);
+    // console.log(model);
+    // console.log(retweets);
+    // console.log(replies);
+    // console.log(type);
+    const { data } = await axios.post('/search', { q, model, retweets, replies, type });
     const body = document.querySelector('main');
     for (let tweet of data) {
         const p = document.createElement('p');

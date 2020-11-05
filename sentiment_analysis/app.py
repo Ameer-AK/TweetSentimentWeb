@@ -8,7 +8,7 @@ ml = MLAnalyzer()
 l = LexiconAnalyzer()
 
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analyze_sentiment', methods=['POST'])
 def analyze():
     inp = request.get_json()
     texts = inp['texts']

@@ -33,16 +33,27 @@ app.get('/search', (req, res) => {
 })
 
 app.post('/search', async (req, res) => {
-    const { q, model } = req.body;
-    const result = await client.get('search/tweets', { q: `${q} -filter:retweets`, tweet_mode: 'extended', count: 5, lang: 'en' })
-    result.statuses.forEach(s => console.log(s.full_text));
-    const texts = result.statuses.map(status => status.full_text)
-    const { data } = await axios.post('http://localhost:5000/analyze', { texts, model })
-    console.log(data);
-    const out = result.statuses.map((s, i) => {
-        return { username: s.user.screen_name, text: s.full_text, time: s.created_at, prediction: data[i] }
+    const { q, model, retweets, replies, type } = req.body;
+    const result = await client.get('search/tweets', {
+        q: `"${q}" ${retweets ? '' : '-filter:retweets'} ${replies ? '' : '-filter:replies'}`,
+        tweet_mode: 'extended',
+        count: 5,
+        result_type: type,
+        lang: 'en'
     })
-    console.log(out);
+    const nextResultsParams = new URLSearchParams(result.search_metadata.next_results);
+    const max_id = nextResultsParams.get('max_id');
+    const texts = result.statuses.map(status => status.full_text)
+    const { data } = await axios.post('http://localhost:5000/analyze_sentiment', { texts, model })
+    const out = result.statuses.map((s, i) => {
+        return {
+            username: s.user.screen_name,
+            text: s.full_text,
+            time: s.created_at,
+            prediction: data[i],
+            max_id
+        }
+    })
     res.send(out)
 })
 
@@ -53,10 +64,7 @@ app.get('/analyze', (req, res) => {
 
 app.post('/analyze', async (req, res) => {
     const { texts, model } = req.body;
-    console.log(`ANALYZING: ${texts}`);
-    const response = await axios.post('http://localhost:5000/analyze', { texts, model })
-    const { data } = response;
-    console.log(`Result from Python: ${data}`);
+    const { data } = await axios.post('http://localhost:5000/analyze_sentiment', { texts, model })
     res.send({ result: data })
 })
 
