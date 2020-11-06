@@ -1,4 +1,5 @@
 const searchForm = document.querySelector('#search-form');
+const tweetList = document.querySelector('#tweet-list');
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -22,13 +23,34 @@ searchForm.addEventListener('submit', async (e) => {
 
         const body = document.querySelector('main');
         for (let tweet of tweets) {
+            const li = document.createElement('li');
+            li.classList.add('media');
+            li.classList.add('mb-2');
+            li.classList.add('border');
+            li.classList.add('rounded');
+            li.classList.add('shadow-sm');
+            li.classList.add('pr-3');
+            li.classList.add(tweet.prediction == 1 ? 'pos' : 'neg');
+            const img = document.createElement('img');
+            img.src = '#';
+            img.classList.add('mr-3');
+            const div = document.createElement('div');
+            div.classList.add('media-body');
+            const h5 = document.createElement('h5');
+            h5.classList.add('mt-0');
+            h5.classList.add('mb-1');
+            h5.innerText = tweet.username;
             const p = document.createElement('p');
-            p.innerText = `${tweets.indexOf(tweet) + i * 5 + 1}\nUser: ${tweet.username}\nText:\n${tweet.text}\nCreated on: ${tweet.time}`;
-            p.style.color = tweet.prediction == 1 ? 'green' : 'red';
-            p.style.border = '1px solid black';
-            p.style.fontSize = '16px';
-            p.style.margin = '0px 3px';
-            body.append(p);
+            p.classList.add('mt-0');
+            p.classList.add('mb-0');
+            p.classList.add('text-justify');
+            p.innerText = tweet.text;
+            const small = document.createElement('small');
+            small.classList.add('mt-0');
+            small.innerText = tweet.time;
+            div.append(h5, p, small);
+            li.append(img, div);
+            tweetList.append(li);
         }
     }
     delete max_id;

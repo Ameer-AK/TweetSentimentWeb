@@ -37,7 +37,7 @@ app.post('/search', async (req, res) => {
     const searchOptions = {
         q: `"${q}" ${retweets ? '' : '-filter:retweets'} ${replies ? '' : '-filter:replies'}`,
         tweet_mode: 'extended',
-        count: 5,
+        count: 100,
         result_type: type,
         lang: 'en'
     }
