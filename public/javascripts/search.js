@@ -32,8 +32,9 @@ searchForm.addEventListener('submit', async (e) => {
             li.classList.add('pr-3');
             li.classList.add(tweet.prediction == 1 ? 'pos' : 'neg');
             const img = document.createElement('img');
-            img.src = '#';
+            img.src = tweet.img;
             img.classList.add('mr-3');
+            img.classList.add('rounded-circle');
             const div = document.createElement('div');
             div.classList.add('media-body');
             const h5 = document.createElement('h5');

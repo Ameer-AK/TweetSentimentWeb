@@ -8,6 +8,9 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const Twitter = require('twitter');
 const axios = require('axios');
+const moment = require('moment');
+moment.relativeTimeThreshold('s', 40);
+moment.relativeTimeThreshold('ss', null);
 
 const client = new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -46,12 +49,13 @@ app.post('/search', async (req, res) => {
     const nextResultsParams = new URLSearchParams(result.search_metadata.next_results);
     const next_max_id = nextResultsParams.get('max_id');
     const texts = result.statuses.map(status => status.full_text)
-    const { data: predictions } = await axios.post('http://localhost:5000/analyze_sentiment', { texts, model })
+    const { data: predictions } = await axios.post('http://localhost:5000/analyze_sentiment', { texts, model });
     const tweets = result.statuses.map((s, i) => {
         return {
             username: s.user.screen_name,
+            img: s.user.profile_image_url_https,
             text: s.full_text,
-            time: s.created_at,
+            time: moment.utc(s.created_at, 'ddd MMM DD hh:mm:ss Z YYYY').fromNow(),
             prediction: predictions[i]
         }
     })
