@@ -4,15 +4,15 @@
         <h1 class="text-center">Search and Analyze Tweets</h1>
     </div>
 </div>
-<div class="row" style="height: 55vh;">
+<div class="row" id="search-row">
     <div class=" col-4">
         <form action="/search" method="POST" id="search-form">
             <div class="form-group">
-                <label for="q" class="form-label">Keyword(s)</label>
-                <input class="form-control" name="q" id="q" cols="30" rows="5"></input>
+                <label for="q" class="form-label"><b>Keyword(s)</b></label>
+                <input class="form-control" name="q" id="q" required></input>
             </div>
             <div class="form-group">
-                <label for="count-select" class="form-label">Number of Tweets</label>
+                <label for="count-select" class="form-label"><b>Number of Tweets</b></label>
                 <select class="form-control" name="count" id="count-select">
                     <option value="100">100</option>
                     <option value="500">500</option>
@@ -20,7 +20,7 @@
                     <option value="5000">5000</option>
                 </select>
             </div>
-            <label for="model-form-group" class="form-label">Sentiment Analysis Model</label>
+            <label for="model-form-group" class="form-label"><b>Sentiment Analysis Model</b></label>
             <div class="form-group" id="model-form-group">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="model" id="ml-radio" value="ml" checked>
@@ -31,7 +31,7 @@
                     <label class="form-check-label" for="l-radio">Lexicon</label>
                 </div>
             </div>
-            <label for="include-form-group" class="form-label">Inlude</label>
+            <label for="include-form-group" class="form-label"><b>Inlude</b></label>
             <div class="form-group" id="include-form-group">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" name="retweets" id="retweets">
@@ -42,7 +42,7 @@
                     <label class="form-check-label" for="replies">Replies</label>
                 </div>
             </div>
-            <label for="type-form-group" class="form-label">Result Type</label>
+            <label for="type-form-group" class="form-label"><b>Result Type</b></label>
             <div class="form-group" class="type-form-group">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="type" id="recent-radio" value="recent" checked>
@@ -57,10 +57,10 @@
                     <label class="form-check-label" for="mixed-radio">Mixed</label>
                 </div>
             </div>
-            <button class="btn btn-success">Search</button>
+            <button class="btn btn-success btn-block">Search</button>
         </form>
     </div>
-    <div class="col-8 h-100 overflow-auto h-100">
+    <div class="col-8 h-100 overflow-auto">
         <ul class="mt-2 list-unstyled" id="tweet-list">
 
         </ul>

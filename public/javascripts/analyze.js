@@ -1,11 +1,9 @@
 const analyzeForm = document.querySelector('#analyze-form');
-
+const resultH2 = document.querySelector('#analyze-result');
 analyzeForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const analyzeInput = analyzeForm.elements.analyze_text;
-    const modelInput = analyzeForm.elements.model;
-    const res = await axios.post('/analyze', { texts: [analyzeInput.value], model: modelInput.value })
-    const h2 = document.createElement('h2');
-    h2.innerText = res.data.result;
-    document.querySelector('body').append(h2);
+    const texts = [analyzeForm.elements.analyze_text.value];
+    const model = analyzeForm.elements.model.value;
+    const res = await axios.post('/analyze', { texts, model })
+    resultH2.innerHTML = res.data.result == 1 ? 'Positive &#128516;' : 'Negative &#9785;';
 })
