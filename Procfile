@@ -1,1 +1,1 @@
-web: node app.js cd sentiment_analysis && gunicorn app:app -w 1 -b 0.0.0.0:1337
+web: node app.js && cd sentiment_analysis && gunicorn app:app -w 1 -b 0.0.0.0:1337
