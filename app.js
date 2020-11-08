@@ -46,10 +46,11 @@ app.post('/search', async (req, res) => {
     }
     if (max_id) searchOptions.max_id = max_id;
     const result = await client.get('search/tweets', searchOptions)
+    console.log("GOT TWEETS!");
     const nextResultsParams = new URLSearchParams(result.search_metadata.next_results);
     const next_max_id = nextResultsParams.get('max_id');
     const texts = result.statuses.map(status => status.full_text)
-    const { data: predictions } = await axios.post('http://localhost:5000/analyze_sentiment', { texts, model });
+    const { data: predictions } = await axios.post('http://0.0.0.0:1337/analyze_sentiment', { texts, model });
     const tweets = result.statuses.map((s, i) => {
         return {
             username: s.user.screen_name,
