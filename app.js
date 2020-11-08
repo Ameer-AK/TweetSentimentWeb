@@ -69,7 +69,7 @@ app.get('/analyze', (req, res) => {
 
 app.post('/analyze', async (req, res) => {
     const { texts, model } = req.body;
-    const { data } = await axios.post('http://127.0.0.1:8000/analyze_sentiment', { texts, model })
+    const { data } = await axios.post('http://0.0.0.0:1337/analyze_sentiment', { texts, model })
     res.send({ result: data })
 })
 
