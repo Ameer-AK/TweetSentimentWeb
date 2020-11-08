@@ -1,2 +1,2 @@
 node: node app.js
-python: cd sentiment_analysis && gunicorn app:app -w 1 -b 0.0.0.0:1337
+python: cd sentiment_analysis && gunicorn app:app -w 1 -b 0.0.0.0:1337 --max-requests 100
