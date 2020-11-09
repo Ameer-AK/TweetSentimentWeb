@@ -256,5 +256,5 @@ dist
 .pnp.*
 
 .flaskenv
-sentiment_analysis/models/
+# sentiment_analysis/models/
 .vscode
