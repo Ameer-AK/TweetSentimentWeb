@@ -1,73 +1,73 @@
 <% layout('layouts/boilerplate') %>
-<div class="row mb-5 mt-4">
+<div class="row mb-4 mt-3">
     <div class="col-6 offset-3">
         <h1 class="text-center">Search and Analyze Tweets</h1>
     </div>
 </div>
 <div class="card shadow p-3">
     <div class="row card-body" id="search-row">
-        <div class=" col-4">
-            <form action="/search" method="POST" id="search-form">
-                <div class="form-group">
-                    <label for="q" class="form-label"><b>Keyword(s)</b></label>
-                    <input class="form-control" name="q" id="q" required></input>
+        <form class="col-3 h-100 overflow-auto" action="/search" method="POST" id="search-form">
+            <div class="form-group">
+                <label for="q" class="form-label"><b>Keyword(s)</b></label>
+                <input class="form-control" name="q" id="q" required></input>
+            </div>
+            <div class="form-group">
+                <label for="count-select" class="form-label"><b>Number of Tweets</b></label>
+                <select class="form-control" name="count" id="count-select">
+                    <option value="100">100</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                    <option value="5000">5000</option>
+                </select>
+            </div>
+            <label for="model-form-group" class="form-label"><b>Sentiment Analysis Model</b></label>
+            <div class="form-group" id="model-form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="model" id="ml-radio" value="ml" checked>
+                    <label class="form-check-label" for="ml-radio">Machine Learning (recommended)</label>
                 </div>
-                <div class="form-group">
-                    <label for="count-select" class="form-label"><b>Number of Tweets</b></label>
-                    <select class="form-control" name="count" id="count-select">
-                        <option value="100">100</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                        <option value="5000">5000</option>
-                    </select>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="model" id="l-radio" value="l">
+                    <label class="form-check-label" for="l-radio">Lexicon</label>
                 </div>
-                <label for="model-form-group" class="form-label"><b>Sentiment Analysis Model</b></label>
-                <div class="form-group" id="model-form-group">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="model" id="ml-radio" value="ml" checked>
-                        <label class="form-check-label" for="ml-radio">Machine Learning (recommended)</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="model" id="l-radio" value="l">
-                        <label class="form-check-label" for="l-radio">Lexicon</label>
-                    </div>
+            </div>
+            <label for="include-form-group" class="form-label"><b>Inlude</b></label>
+            <div class="form-group" id="include-form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="retweets" id="retweets">
+                    <label class="form-check-label" for="retweets">Retweets</label>
                 </div>
-                <label for="include-form-group" class="form-label"><b>Inlude</b></label>
-                <div class="form-group" id="include-form-group">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="retweets" id="retweets">
-                        <label class="form-check-label" for="retweets">Retweets</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="replies" id="replies">
-                        <label class="form-check-label" for="replies">Replies</label>
-                    </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="replies" id="replies">
+                    <label class="form-check-label" for="replies">Replies</label>
                 </div>
-                <label for="type-form-group" class="form-label"><b>Result Type</b></label>
-                <div class="form-group" class="type-form-group">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="type" id="recent-radio" value="recent"
-                            checked>
-                        <label class="form-check-label" for="recent-radio">Recent</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="type" id="popular-radio" value="popular">
-                        <label class="form-check-label" for="popular">Popular</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="type" id="mixed-radio" value="mixed">
-                        <label class="form-check-label" for="mixed-radio">Mixed</label>
-                    </div>
+            </div>
+            <label for="type-form-group" class="form-label"><b>Result Type</b></label>
+            <div class="form-group" class="type-form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="type" id="recent-radio" value="recent" checked>
+                    <label class="form-check-label" for="recent-radio">Recent</label>
                 </div>
-                <button class="btn btn-success btn-block">Search</button>
-            </form>
-        </div>
-        <div class="col-8 h-100 overflow-auto">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="type" id="popular-radio" value="popular">
+                    <label class="form-check-label" for="popular">Popular</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="type" id="mixed-radio" value="mixed">
+                    <label class="form-check-label" for="mixed-radio">Mixed</label>
+                </div>
+            </div>
+            <button class="btn btn-success btn-block">Search</button>
+        </form>
+        <div class="col-5 h-100 overflow-auto">
             <ul class="mt-2 list-unstyled" id="tweet-list">
 
             </ul>
         </div>
+        <div class="col-4 d-flex align-items-center h-100">
+            <canvas id="chart"></canvas>
+        </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 <script src="/javascripts/search.js"></script>

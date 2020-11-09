@@ -1,12 +1,12 @@
 <% layout('layouts/boilerplate') %>
-<div class="row mb-5 mt-4">
+<div class="row mb-4 mt-3">
     <div class="col-6 offset-3">
         <h1 class="text-center">Analyze Text</h1>
     </div>
 </div>
 <div class="card shadow">
     <div class="row card-body" id="analyze-row">
-        <div class="col-4">
+        <div class="col-6">
             <form action="/search" method="POST" id="analyze-form">
                 <div class="form-group">
                     <label for="q" class="form-label"><b>Text to analyze</b></label>
@@ -28,7 +28,7 @@
                 <button class="btn btn-block btn-success">Analyze</button>
             </form>
         </div>
-        <div class="col-8 d-flex flex-column align-items-center justify-content-center">
+        <div class="col-6 d-flex flex-column align-items-center justify-content-center">
             <h2 id="analyze-result"></h2>
         </div>
     </div>

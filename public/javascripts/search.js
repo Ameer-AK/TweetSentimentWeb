@@ -1,5 +1,32 @@
 const searchForm = document.querySelector('#search-form');
 const tweetList = document.querySelector('#tweet-list');
+const chartNode = document.querySelector('#chart');
+
+const chartData = {
+    datasets: [{
+        data: [0, 0],
+        backgroundColor: ['#66BB6A', '#ef5350']
+    }],
+
+    labels: [
+        'Positive',
+        'Negative',
+    ]
+};
+
+const chart = new Chart(chartNode, {
+    type: 'doughnut',
+    data: chartData,
+    options: {
+        maintainAspectRatio: false,
+        layout: {
+            padding: 30
+        },
+        animation: {
+            duration: 2000,
+        }
+    }
+});
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -13,6 +40,8 @@ searchForm.addEventListener('submit', async (e) => {
     } = searchForm.elements;
     searchForm.elements.q.value = '';
     tweetList.innerHTML = '';
+    chartData.datasets[0].data = [0, 0];
+    chart.update();
     const options = { q, model, retweets, replies, type }
 
     var max_id;
@@ -28,6 +57,9 @@ searchForm.addEventListener('submit', async (e) => {
 
 const addTweets = (tweetList, tweets) => {
     for (let tweet of tweets) {
+        if (tweet.prediction == 1) chartData.datasets[0].data[0] += 1;
+        else chartData.datasets[0].data[1] += 1;
+        chart.update()
         const li = document.createElement('li');
         li.classList.add('media');
         li.classList.add('mb-2');
