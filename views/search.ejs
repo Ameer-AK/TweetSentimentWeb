@@ -1,12 +1,12 @@
 <% layout('layouts/boilerplate') %>
-<div class="row mb-4 mt-3">
+<div class="row mb-4 mt-md-3">
     <div class="col-6 offset-3">
         <h1 class="text-center">Search and Analyze Tweets</h1>
     </div>
 </div>
-<div class="card shadow p-3">
+<div class="card shadow p-md-3">
     <div class="row card-body" id="search-row">
-        <form class="col-3 h-100 overflow-auto" action="/search" method="POST" id="search-form">
+        <form class="col-md-3 overflow-auto mb-2" action="/search" method="POST" id="search-form">
             <div class="form-group">
                 <label for="q" class="form-label"><b>Keyword(s)</b></label>
                 <input class="form-control" name="q" id="q" required></input>
@@ -59,15 +59,16 @@
             </div>
             <button class="btn btn-success btn-block">Search</button>
         </form>
-        <div class="col-5 h-100 overflow-auto">
+        <div class="col-md-5 overflow-auto" id="tweet-list-container">
             <ul class="mt-2 list-unstyled" id="tweet-list">
 
             </ul>
         </div>
-        <div class="col-4 d-flex align-items-center h-100">
+        <div class="col-md-4 d-flex align-items-center" id="chart-container">
             <canvas id="chart"></canvas>
         </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 <script src="/javascripts/search.js"></script>

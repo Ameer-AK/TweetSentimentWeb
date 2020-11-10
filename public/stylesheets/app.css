@@ -14,10 +14,15 @@
     background-color: #E8F5E9;
 }
 
-#search-row {
-    height: 60vh;
-}
-
 .nav-link:hover {
     border-bottom: solid 1px white;
+}
+
+#tweet-list-container {
+    min-height: 300px;
+    max-height: 300px;
+}
+
+#chart-container {
+    min-height: 300px;
 }

@@ -9,8 +9,8 @@ const chartData = {
     }],
 
     labels: [
-        'Positive',
-        'Negative',
+        'Positive Tweets',
+        'Negative Tweets',
     ]
 };
 
@@ -23,7 +23,12 @@ const chart = new Chart(chartNode, {
             padding: 30
         },
         animation: {
-            duration: 2000,
+            duration: 500,
+        },
+        plugins: {
+            labels: {
+                fontColor: 'black'
+            }
         }
     }
 });
