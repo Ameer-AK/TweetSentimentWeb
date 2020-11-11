@@ -29,6 +29,12 @@ const chart = new Chart(chartNode, {
             labels: {
                 fontColor: 'black'
             }
+        },
+        legend: {
+            labels: {
+                padding: 0
+            },
+            align: 'start'
         }
     }
 });
@@ -72,6 +78,7 @@ const addTweets = (tweetList, tweets) => {
         li.classList.add('rounded');
         li.classList.add('shadow-sm');
         li.classList.add('pr-3');
+        li.classList.add('text-wrap');
         li.classList.add(tweet.prediction == 1 ? 'pos' : 'neg');
         const img = document.createElement('img');
         img.src = tweet.img;
