@@ -41,4 +41,8 @@
     }
 }
 
+.progress {
+    visibility: hidden;
+}
+
 

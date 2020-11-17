@@ -1,6 +1,9 @@
 const searchForm = document.querySelector('#search-form');
 const tweetList = document.querySelector('#tweet-list');
 const chartNode = document.querySelector('#chart');
+const progress = document.querySelector('.progress');
+const progressBar = document.querySelector('.progress-bar');
+const searchButton = document.querySelector('.btn');
 
 const chartData = {
     datasets: [{
@@ -41,6 +44,8 @@ const chart = new Chart(chartNode, {
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.dir(searchButton);
+    searchButton.disabled = true;
     const {
         q: { value: q },
         count: { value: count },
@@ -55,18 +60,30 @@ searchForm.addEventListener('submit', async (e) => {
     chart.update();
     const options = { q, model, retweets, replies, type }
 
+    progress.style.visibility = 'visible';
+
     var max_id;
+    window.progressCount = 0;
     for (let i = 0; i < count / 100; i++) {
         if (max_id) options.max_id = max_id;
         const { data } = await axios.post('/search', options);
         const { tweets } = data;
         max_id = data.max_id;
-        addTweets(tweetList, tweets);
+        addTweets(tweetList, tweets, count);
     }
+    progressBar.style.width = '100%';
     delete max_id;
+    delete window.progressCount;
+
+    searchButton.disabled = false;
+
+    window.setTimeout(() => {
+        progress.style.visibility = 'hidden';
+        progressBar.style.width = '0';
+    }, 1000);
 })
 
-const addTweets = (tweetList, tweets) => {
+const addTweets = (tweetList, tweets, count) => {
     for (let tweet of tweets) {
         if (tweet.prediction == 1) chartData.datasets[0].data[0] += 1;
         else chartData.datasets[0].data[1] += 1;
@@ -101,5 +118,9 @@ const addTweets = (tweetList, tweets) => {
         div.append(h5, p, small);
         li.append(img, div);
         tweetList.append(li);
+
+        window.progressCount += 1;
+        progressBar.style.width = window.progressCount / count * 100 + '%';
+
     }
 }
