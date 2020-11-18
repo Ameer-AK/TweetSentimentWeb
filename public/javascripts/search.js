@@ -81,6 +81,7 @@ searchForm.addEventListener('submit', async (e) => {
         progress.style.visibility = 'hidden';
         progressBar.style.width = '0';
     }, 1000);
+    return false;
 })
 
 const addTweets = (tweetList, tweets, count) => {
