@@ -1,6 +1,36 @@
 <% layout('layouts/boilerplate') %>
-
-<h1>Welcome to TweetSentiment</h1>
-
-<a class="btn btn-primary" href="/search">Search</a>
-<a class="btn btn-primary" href="/analyze">Analyze</a>
+<main class="container-fluid h-100 d-flex flex-column align-items-center">
+    <div class="row m-4">
+        <h1 class="text-center">Welcome to TweetSentiment</h1>
+    </div>
+    <div class="row d-flex flex-column align-items-center">
+        <div class="col-md-9">
+            <h5 class="text-center mb-3">This is a Twitter sentiment analysis
+                project, estimating the polarity of
+                emotions behind
+                the text of tweets posted on Twitter.</h5>
+            <p class="text-justify">
+                Two sentiment analysis models are provided; a machine learning model and a lexicon-based model.
+                The machine learning model is a logistic regression classifier trained using the <a
+                    href="http://help.sentiment140.com/for-students/">Sentiment140</a> dataset.
+                The lexicon-based model is built using the <a
+                    href="https://github.com/aesuli/SentiWordNet">SentiWordNet</a>
+                sentiment lexicon.
+            </p>
+            <div class="mt-5">
+                <p class="text-center">The Search Tool pulls tweets from Twitter using the search query and analyzes
+                    their text using the chosen sentiment analysis model.</p>
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/search">Search Tweets</a>
+                </div>
+            </div>
+            <div class="my-5">
+                <p class="text-center">The Analyze Tool can be used to analyze any input text using one of the models.
+                </p>
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/analyze">Analyze</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
